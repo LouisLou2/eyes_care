@@ -1,5 +1,8 @@
+import 'package:eyescare/features/piazza/page/new_post_screen.dart';
+import 'package:eyescare/features/piazza/prov/post_prov.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class NewPostCard extends StatelessWidget {
@@ -25,11 +28,31 @@ class NewPostCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: ShadInputFormField(
-                    placeholder: Text('Share your case or start a discussion'),
-                    decoration: ShadDecoration(
-                      color: Colors.white24,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(16),
+                      backgroundColor: Colors.white12,
+                      foregroundColor: Colors.deepOrange,
+                      surfaceTintColor: Colors.deepOrange,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
+                    child: const Text(
+                      'Share your case or start a discussion',
+                    ),
+                    onPressed: () {
+                      showShadDialog(
+                        context: context,
+                        builder: (con) => NewPostDialog(
+                          onPost: (post) {
+                            context.read<PostProv>().addPost(post);
+                          },
+                          doctorName: 'Joe',
+                          doctorSpecialty: 'Doctor',
+                          doctorAvatar: 'assets/image/doctor1-min.png',
+                        ),
+                      );
+                    },
                   )
                 ),
               ],

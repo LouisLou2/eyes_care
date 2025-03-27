@@ -1,11 +1,12 @@
 import 'package:eyescare/features/piazza/entity/comment.dart';
+import 'package:flutter/material.dart';
 
 class Post {
   final String doctorName;
   final String doctorSpecialty;
   final String doctorAvatar;
   final String postTime;
-  final String imageUrl;
+  final Image? image;
   final String title;
   final String description;
   int likes;
@@ -16,7 +17,7 @@ class Post {
     required this.doctorSpecialty,
     required this.doctorAvatar,
     required this.postTime,
-    required this.imageUrl,
+    this.image,
     required this.title,
     required this.description,
     required this.likes,

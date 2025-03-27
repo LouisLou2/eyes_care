@@ -98,15 +98,22 @@ class _PostCardState extends State<PostCard> {
             const SizedBox(height: 8),
             Text(widget.post.description),
             const SizedBox(height: 16),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                widget.post.imageUrl,
-                fit: BoxFit.cover,
-                height: 300,
-                width: double.infinity,
+            if (widget.post.image != null)
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: widget.post.image,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox.shrink(),
+                  ),
+                ],
               ),
-            ),
             const SizedBox(height: 16),
             Row(
               children: [

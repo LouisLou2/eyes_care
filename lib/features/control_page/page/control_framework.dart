@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  child: const AnalysisResultPage(hasResult: false),
+                  child: const AnalysisResultPage(hasResult: true),
                 ),
               )
             ),

@@ -472,7 +472,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       home: Material(
-        child: const VideoBackgroundPage(),
+        child: const MyHomePage(),
       )
     );
   }

@@ -6,6 +6,8 @@ import 'package:eyescare/features/workplace/shered/percent_card.dart';
 import 'package:eyescare/features/workplace/shered/percent_info_widget.dart';
 import 'package:eyescare/style/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import 'dart:html' as html;
 
 class AnalysisResultPage extends StatefulWidget {
 
@@ -23,6 +25,26 @@ class _AnalysisResultPageState extends State<AnalysisResultPage> {
   final String desc = 'Diagnosed with wet AMD in right eye (11/08/2024) and mild bilateral cataracts. Visual acuity: OD 20/100 (corrected 20/70), OS 20/40 (corrected 20/25). IOP: 18/16 mmHg. Currently receiving Lucentis injections q4weeks in right eye, using Timolol drops BID in both eyes, and short-term Prednisolone in right eye. Latest OCT (03/12/2025) shows decreased subretinal fluid and reduced macular leakage. Treatment plan includes continued anti-VEGF therapy, monitoring via OCT, and potential cataract surgery after AMD stabilization. Next appointment: 04/09/2025 with Dr. Williams for injection and follow-up.';
 
   _AnalysisResultPageState(bool hasResult): _hasResult = ValueNotifier<bool>(hasResult);
+
+  final List<String> formats = ['PDF', 'Docx'];
+
+  void downloadAssetFile() {
+    String origin = html.window.location.origin;
+    // 获取资源的完整路径（根据您的应用部署方式可能需要调整）
+    String url = '$origin/assets/assets/reports/f1.png';
+
+    // 创建一个隐藏的 <a> 元素
+    final anchor = html.AnchorElement(href: url)
+      ..target = 'blank'
+      ..download = 'AnalysisResult.pdf';
+
+    // 将链接添加到文档中并触发点击
+    html.document.body?.append(anchor);
+    anchor.click();
+
+    // 从文档中移除链接
+    anchor.remove();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -310,23 +332,46 @@ class _AnalysisResultPageState extends State<AnalysisResultPage> {
                       ),
                     ),
                     actions: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
-                          backgroundColor: Colors.deepOrange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                      // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+                      //     backgroundColor: Colors.deepOrange,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //     ),
+                      //   ),
+                      //   onPressed: () {},
+                      //   child: Text(
+                      //     "Export",
+                      //     style: TextStyle(
+                      //       color: Colors.white,
+                      //       fontSize: 13,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //   ),
+                      // ),
+                      ShadSelect<String>(
+                        decoration: ShadDecoration(
+                          border: ShadBorder.all(color: Colors.deepOrange, width: 2),
                         ),
-                        onPressed: () {},
-                        child: Text(
-                          "Export",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                        placeholder: const Text('Export'),
+                        options: [
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'File Formats',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
+                          ...formats.map((e) => ShadOption(value: e, child: Text(e))),
+                        ],
+                        selectedOptionBuilder: (context, value) => Text(value),
+                        onChanged: (v){
+                          downloadAssetFile();
+                        }
                       ),
                     ],
                   ),
