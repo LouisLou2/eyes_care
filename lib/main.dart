@@ -471,8 +471,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ShadNeutralColorScheme.dark(),
       ),
       themeMode: ThemeMode.dark,
+      routes: {
+        '/sign_in': (context) => const SignInScreen(),
+        '/studio': (context) => const StudioPage(),
+      },
       home: Material(
-        child: const MyHomePage(),
+        child: const IntroPage(),
       )
     );
   }

@@ -62,6 +62,7 @@ class AnalysisCard extends StatelessWidget {
               fontSize: 14,
             ),
           ),
+          SizedBox(height: 10),
           Align(
             alignment: Alignment.centerRight,
             child: OutlinedButton(

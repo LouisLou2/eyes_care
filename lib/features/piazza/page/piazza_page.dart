@@ -114,6 +114,9 @@ class _MedicalFeedScreenState extends State<MedicalFeedScreen> {
              create: (context) => PostProv(),
               child: Scaffold(
                 appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  titleSpacing: 0,
+                  flexibleSpace: const SizedBox(),
                   title: NewPostCard(),
                   toolbarHeight: 180,
                   centerTitle: true,

@@ -254,6 +254,7 @@ class _MenuSubPageState extends State<MenuSubPage> {
                       padding: 15,
                       size: 17,
                       onPressed: () {
+                        Navigator.pushNamed(context, '/sign_in');
                       },
                     ),
                   ),

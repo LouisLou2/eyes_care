@@ -1,6 +1,8 @@
 
+import 'package:eyescare/features/control_page/page/control_framework.dart';
 import 'package:eyescare/features/workplace/page/select_image_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -91,7 +93,7 @@ SliverWoltModalSheetPage page1(BuildContext modalSheetContext) {
   );
 }
 
-SliverWoltModalSheetPage page2(BuildContext modalSheetContext) {
+SliverWoltModalSheetPage page2(BuildContext modalSheetContext, BuildContext con) {
   return WoltModalSheetPage(
     hasSabGradient: false,
     topBarTitle: const Text(
@@ -126,12 +128,15 @@ SliverWoltModalSheetPage page2(BuildContext modalSheetContext) {
           SizedBox(width: 20),
           Expanded(
             child: OutlinedButton(
-              onPressed: WoltModalSheet.of(modalSheetContext).showNext,
+              onPressed: (){
+                Navigator.of(modalSheetContext).pop();
+                con.read<StudioProv>().setAnalysisState(AnalysisState.analyzing);
+              },
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.deepOrangeAccent,
                 side: const BorderSide(color: Colors.deepOrangeAccent),
               ),
-              child: Center(child: Text('Previous')),
+              child: Center(child: Text('Confirm')),
             ),
           ),
         ],

@@ -1,5 +1,7 @@
+import 'package:eyescare/features/control_page/page/control_framework.dart';
 import 'package:eyescare/style/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -30,108 +32,9 @@ class HistoryPage extends StatelessWidget {
                   spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: AssetImage('assets/image/f1.png'),
-                              fit: BoxFit.cover,
-                            ),
-                            border: Border.all(color: Colors.grey[700]!, width: 1),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '#142467FF',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '2023-02-23 14:30:45',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: AssetImage('assets/image/f1.png'),
-                              fit: BoxFit.cover,
-                            ),
-                            border: Border.all(color: Colors.grey[700]!, width: 1),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '#142467FF',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '2023-02-23 14:30:45',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: AssetImage('assets/image/f1.png'),
-                              fit: BoxFit.cover,
-                            ),
-                            border: Border.all(color: Colors.grey[700]!, width: 1),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '#142467FF',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '2023-02-23 14:30:45',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                    getHistoryCard(context, '#152465FF', '2025-02-23 11:30:45', 'assets/image/f1.png'),
+                    getHistoryCard(context, '#142233FF', '2025-02-23 08:30:04', 'assets/image/f1.png'),
+                    getHistoryCard(context, '#108937FF', '2025-02-23 23:29:10', 'assets/image/f1.png'),
                   ]
                 ),
               ],
@@ -151,78 +54,12 @@ class HistoryPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Row(
-                    spacing: 10,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 200,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              image: DecorationImage(
-                                image: AssetImage('assets/image/f1.png'),
-                                fit: BoxFit.cover,
-                              ),
-                              border: Border.all(color: Colors.grey[700]!, width: 1),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            '#142467FF',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '2023-02-23 14:30:45',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 200,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              image: DecorationImage(
-                                image: AssetImage('assets/image/f1.png'),
-                                fit: BoxFit.cover,
-                              ),
-                              border: Border.all(color: Colors.grey[700]!, width: 1),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            '#142467FF',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '2023-02-23 14:30:45',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ]
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    getHistoryCard(context, '#112261FF', '2023-02-21 10:30:01', 'assets/image/f2.png'),
+                    getHistoryCard(context, '#123261FF', '2023-02-21 12:30:04', 'assets/image/f2.png'),
+                  ],
                 ),
               ],
             ),
@@ -244,74 +81,8 @@ class HistoryPage extends StatelessWidget {
                   spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: AssetImage('assets/image/f1.png'),
-                              fit: BoxFit.cover,
-                            ),
-                            border: Border.all(color: Colors.grey[700]!, width: 1),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '#142467FF',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '2023-02-23 14:30:45',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: AssetImage('assets/image/f1.png'),
-                              fit: BoxFit.cover,
-                            ),
-                            border: Border.all(color: Colors.grey[700]!, width: 1),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '#142467FF',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '2023-02-23 14:30:45',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                    getHistoryCard(context, '#897865RR', '2023-02-20 14:45:45', 'assets/image/f1.png'),
+                    getHistoryCard(context, '#144467FF', '2023-02-20 19:35:45', 'assets/image/f1.png'),
                   ],
                 ),
               ],
@@ -322,4 +93,47 @@ class HistoryPage extends StatelessWidget {
       ),
     );
   }
+}
+
+
+Widget getHistoryCard(BuildContext context,String id, String time, String imageUrl){
+  return GestureDetector(
+    onTap: (){
+      context.read<StudioProv>().setAnalysisState(AnalysisState.done);
+    },
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 200,
+          height: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            image: DecorationImage(
+              image: AssetImage(imageUrl),
+              fit: BoxFit.cover,
+            ),
+            border: Border.all(color: Colors.grey[700]!, width: 1),
+          ),
+        ),
+        SizedBox(height: 5),
+        Text(
+          id,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          time,
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    ),
+  );
 }

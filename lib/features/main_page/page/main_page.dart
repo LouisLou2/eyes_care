@@ -1,16 +1,15 @@
 import 'package:eyescare/features/main_page/page/menu_sub_page.dart';
 import 'package:eyescare/features/main_page/page/specialty_page.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
-class VideoBackgroundPage extends StatefulWidget {
-  const VideoBackgroundPage({super.key});
+class IntroPage extends StatefulWidget {
+  const IntroPage({super.key});
 
   @override
-  State<VideoBackgroundPage> createState() => _VideoBackgroundPageState();
+  State<IntroPage> createState() => _IntroPageState();
 }
 
-class _VideoBackgroundPageState extends State<VideoBackgroundPage> {
+class _IntroPageState extends State<IntroPage> {
   @override
   void initState() {
     super.initState();
