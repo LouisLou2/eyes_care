@@ -97,7 +97,60 @@ SliverWoltModalSheetPage page2(BuildContext modalSheetContext, BuildContext con)
   return WoltModalSheetPage(
     hasSabGradient: false,
     topBarTitle: const Text(
-      'Select an Image',
+      'Select an Image (Left Eye)',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+      ),
+    ),
+    isTopBarLayerAlwaysVisible: true,
+    navBarHeight: 60,
+    trailingNavBarWidget: IconButton(
+      padding: const EdgeInsets.all(16),
+      icon: const Icon(Icons.close),
+      onPressed: Navigator.of(modalSheetContext).pop,
+    ),
+    stickyActionBar: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: OutlinedButton(
+              onPressed: WoltModalSheet.of(modalSheetContext).showPrevious,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.deepOrangeAccent,
+                side: const BorderSide(color: Colors.deepOrangeAccent),
+              ),
+              child: Center(child: Text('Previous')),
+            ),
+          ),
+          SizedBox(width: 20),
+          Expanded(
+            child: OutlinedButton(
+              onPressed: WoltModalSheet.of(modalSheetContext).showNext,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.deepOrangeAccent,
+                side: const BorderSide(color: Colors.deepOrangeAccent),
+              ),
+              child: Center(child: Text('Next')),
+            ),
+          ),
+        ],
+      ),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(70, 30, 70, 80),
+      child: SelectImagePage(),
+    ),
+  );
+}
+
+SliverWoltModalSheetPage page3(BuildContext modalSheetContext, BuildContext con) {
+  return WoltModalSheetPage(
+    hasSabGradient: false,
+    topBarTitle: const Text(
+      'Select an Image (Right Eye)',
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 18,

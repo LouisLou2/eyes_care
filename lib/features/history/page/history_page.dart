@@ -32,9 +32,9 @@ class HistoryPage extends StatelessWidget {
                   spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    getHistoryCard(context, '#152465FF', '2025-02-23 11:30:45', 'assets/image/f1.png'),
-                    getHistoryCard(context, '#142233FF', '2025-02-23 08:30:04', 'assets/image/f1.png'),
-                    getHistoryCard(context, '#108937FF', '2025-02-23 23:29:10', 'assets/image/f1.png'),
+                    getHistoryCard(context, '#152465FF', '2025-02-23 11:30:45', 'assets/eyes/e1_o.jpg'),
+                    getHistoryCard(context, '#142233FF', '2025-02-23 08:30:04', 'assets/eyes/e2_o.jpg'),
+                    getHistoryCard(context, '#108937FF', '2025-02-23 23:29:10', 'assets/eyes/e3_o.jpg'),
                   ]
                 ),
               ],
@@ -57,8 +57,8 @@ class HistoryPage extends StatelessWidget {
                   spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    getHistoryCard(context, '#112261FF', '2023-02-21 10:30:01', 'assets/image/f2.png'),
-                    getHistoryCard(context, '#123261FF', '2023-02-21 12:30:04', 'assets/image/f2.png'),
+                    getHistoryCard(context, '#112261FF', '2023-02-21 10:30:01', 'assets/eyes/e4_o.jpg'),
+                    getHistoryCard(context, '#123261FF', '2023-02-21 12:30:04', 'assets/eyes/e5_o.jpg'),
                   ],
                 ),
               ],
@@ -81,8 +81,8 @@ class HistoryPage extends StatelessWidget {
                   spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    getHistoryCard(context, '#897865RR', '2023-02-20 14:45:45', 'assets/image/f1.png'),
-                    getHistoryCard(context, '#144467FF', '2023-02-20 19:35:45', 'assets/image/f1.png'),
+                    getHistoryCard(context, '#897865RR', '2023-02-20 14:45:45', 'assets/eyes/e6_o.jpg'),
+                    getHistoryCard(context, '#144467FF', '2023-02-20 19:35:45', 'assets/eyes/e7_o.jpg'),
                   ],
                 ),
               ],

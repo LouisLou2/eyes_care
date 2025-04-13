@@ -1,10 +1,9 @@
 import 'package:eyescare/const/serverity_level.dart';
-import 'package:eyescare/features/workplace/entity/rencent_record.dart';
 import 'package:eyescare/features/workplace/shered/analysis_card.dart';
 import 'package:eyescare/features/workplace/shered/model_processing_widget.dart';
 import 'package:eyescare/features/workplace/shered/percent_card.dart';
 import 'package:eyescare/features/workplace/shered/percent_info_widget.dart';
-import 'package:eyescare/style/app_style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'dart:html' as html;
@@ -18,15 +17,15 @@ class AnalysisResultPage extends StatefulWidget {
   State<AnalysisResultPage> createState() => _AnalysisResultPageState(hasResult);
 }
 
-class _AnalysisResultPageState extends State<AnalysisResultPage> {
-
+class _AnalysisResultPageState extends State<AnalysisResultPage> with TickerProviderStateMixin {
+  final ValueNotifier<bool> originalLeft = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> resultLeft = ValueNotifier<bool>(true);
   final ValueNotifier<bool> _hasResult;
-
   final String desc = 'Diagnosed with wet AMD in right eye (11/08/2024) and mild bilateral cataracts. Visual acuity: OD 20/100 (corrected 20/70), OS 20/40 (corrected 20/25). IOP: 18/16 mmHg. Currently receiving Lucentis injections q4weeks in right eye, using Timolol drops BID in both eyes, and short-term Prednisolone in right eye. Latest OCT (03/12/2025) shows decreased subretinal fluid and reduced macular leakage. Treatment plan includes continued anti-VEGF therapy, monitoring via OCT, and potential cataract surgery after AMD stabilization. Next appointment: 04/09/2025 with Dr. Williams for injection and follow-up.';
-
   _AnalysisResultPageState(bool hasResult): _hasResult = ValueNotifier<bool>(hasResult);
-
   final List<String> formats = ['PDF', 'Docx'];
+  TabController? originalTabController;
+  TabController? resultTabController;
 
   void downloadAssetFile() {
     String origin = html.window.location.origin;
@@ -45,6 +44,25 @@ class _AnalysisResultPageState extends State<AnalysisResultPage> {
     // 从文档中移除链接
     anchor.remove();
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _hasResult.value = widget.hasResult;
+    originalTabController = TabController(length: 2, vsync: this);
+    resultTabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    originalLeft.dispose();
+    resultLeft.dispose();
+    _hasResult.dispose();
+    originalTabController?.dispose();
+    resultTabController?.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,49 +84,53 @@ class _AnalysisResultPageState extends State<AnalysisResultPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min, // 使卡片大小自适应内容
                     children: [
-                      // 顶部：徽章和标题
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.white12,
-                                  blurRadius: 2,
-                                  offset: Offset(0, 1),
-                                ),
-                              ],
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            child: Image.asset(
-                              "assets/image/f1.png",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            "Preliminary diagnosis",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        "Preliminary diagnosis",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      SizedBox(height: 16), // 间距
-                      // X 射线图像和控制面板
+                      SizedBox(height: 2), // 间距
+                      ValueListenableBuilder(
+                        valueListenable: originalLeft,
+                        builder: (context, isLeft, _) => CupertinoSlidingSegmentedControl<bool>(
+                          groupValue: isLeft,
+                          children: <bool, Widget>{
+                            true : Text("Left Eye"),
+                            false: Text("Right Eye"),
+                          },
+                          onValueChanged: (bool? value){
+                            originalLeft.value = value!;
+                            originalTabController?.animateTo(value ? 0 : 1);
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 4), // 间距
                       Stack(
                         children: [
                           // 假设有一个 X 射线图像资源
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.asset(
-                              "assets/image/f1.png",
-                              fit: BoxFit.cover,
+                          SizedBox(
+                            height: 450,
+                            child: TabBarView(
+                              controller: originalTabController,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.asset(
+                                    "assets/eyes/e1_o.jpg",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.asset(
+                                    "assets/eyes/e2_o.jpg",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Positioned(
@@ -307,7 +329,7 @@ class _AnalysisResultPageState extends State<AnalysisResultPage> {
         ),
         SizedBox(width: 10),
         Flexible(
-          flex: 3,
+          flex: 4,
           child: ValueListenableBuilder<bool>(
               valueListenable: _hasResult,
               builder: (context, hasRes, _){
@@ -320,6 +342,7 @@ class _AnalysisResultPageState extends State<AnalysisResultPage> {
                   duration: Duration(milliseconds: 500),
                   child: Scaffold(
                     appBar: AppBar(
+                      automaticallyImplyLeading: false,
                       elevation: 0,
                       toolbarHeight: 46,
                       actionsPadding: EdgeInsets.only(right: 12),
@@ -332,46 +355,28 @@ class _AnalysisResultPageState extends State<AnalysisResultPage> {
                         ),
                       ),
                       actions: [
-                        // ElevatedButton(
-                        //   style: ElevatedButton.styleFrom(
-                        //     padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
-                        //     backgroundColor: Colors.deepOrange,
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(10),
-                        //     ),
-                        //   ),
-                        //   onPressed: () {},
-                        //   child: Text(
-                        //     "Export",
-                        //     style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 13,
-                        //       fontWeight: FontWeight.bold,
-                        //     ),
-                        //   ),
-                        // ),
                         ShadSelect<String>(
-                            decoration: ShadDecoration(
-                              border: ShadBorder.all(color: Colors.deepOrange, width: 2),
-                            ),
-                            placeholder: const Text('Export'),
-                            options: [
-                              Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Text(
-                                  'File Formats',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          decoration: ShadDecoration(
+                            border: ShadBorder.all(color: Colors.deepOrange, width: 2),
+                          ),
+                          placeholder: const Text('Export'),
+                          options: [
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Text(
+                                'File Formats',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              ...formats.map((e) => ShadOption(value: e, child: Text(e))),
-                            ],
-                            selectedOptionBuilder: (context, value) => Text(value),
-                            onChanged: (v){
-                              downloadAssetFile();
-                            }
+                            ),
+                            ...formats.map((e) => ShadOption(value: e, child: Text(e))),
+                          ],
+                          selectedOptionBuilder: (context, value) => Text(value),
+                          onChanged: (v){
+                            downloadAssetFile();
+                          }
                         ),
                       ],
                     ),
@@ -388,58 +393,76 @@ class _AnalysisResultPageState extends State<AnalysisResultPage> {
                               mainAxisSize: MainAxisSize.min, // 使卡片大小自适应内容
                               children: [
                                 Text(
-                                  "Key Area Labeling",
+                                  "Processed Image",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 8), // 间距
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Flexible(
-                                      flex: 22,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(16),
-                                        child: Image.asset(
-                                          "assets/image/f1.png",
-                                          fit: BoxFit.cover,
-                                        ),
+                                SizedBox(height: 2), // 间距
+                                ValueListenableBuilder(
+                                  valueListenable: resultLeft,
+                                  builder: (context, isLeft, _) => CupertinoSlidingSegmentedControl<bool>(
+                                    groupValue: isLeft,
+                                    children: <bool, Widget>{
+                                      true : Text("Left Eye"),
+                                      false: Text("Right Eye"),
+                                    },
+                                    onValueChanged: (bool? value){
+                                      resultLeft.value = value!;
+                                      resultTabController?.animateTo(value ? 0 : 1);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 4), // 间距
+                                SizedBox(
+                                  height: 380,
+                                  child: TabBarView(
+                                    controller: resultTabController,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(16),
+                                            child: Image.asset(
+                                              "assets/eyes/e1_p.jpg",
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(16),
+                                            child: Image.asset(
+                                              "assets/eyes/e1_h.png",
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Flexible(
-                                        flex: 7,
-                                        child: Column(
-                                          spacing: 10,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.circular(16),
-                                              child: Image.asset(
-                                                "assets/image/f1_part1.png",
-                                                fit: BoxFit.cover,
-                                              ),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(16),
+                                            child: Image.asset(
+                                              "assets/eyes/e2_p.jpg",
+                                              fit: BoxFit.cover,
                                             ),
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.circular(16),
-                                              child: Image.asset(
-                                                "assets/image/f1_part2.png",
-                                                fit: BoxFit.cover,
-                                              ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(16),
+                                            child: Image.asset(
+                                              "assets/eyes/e2_h.png",
+                                              fit: BoxFit.cover,
                                             ),
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.circular(16),
-                                              child: Image.asset(
-                                                "assets/image/f1_part3.png",
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                    )
-                                  ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

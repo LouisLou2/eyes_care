@@ -85,6 +85,7 @@ class _WorkplaceWelcomePageState extends State<WorkplaceWelcomePage> {
                             return [
                               page1(modalSheetContext),
                               page2(modalSheetContext, context),
+                              page3(modalSheetContext, context),
                             ];
                           },
                           modalTypeBuilder: (context) {
